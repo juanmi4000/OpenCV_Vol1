@@ -1,0 +1,1 @@
+# Librería sobre los ejercicios de OpenCV volumen 1
