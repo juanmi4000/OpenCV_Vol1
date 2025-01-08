@@ -1,1 +1,1 @@
-from .opencv_vol1 import *
+from .opencv_vol1 import imagen_gris, mostrar_imagen
