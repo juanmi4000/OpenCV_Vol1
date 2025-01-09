@@ -19,7 +19,7 @@ def mostrar_imagen(nombre_imagen: str):
 
 # Comprueba que si la imagen exite en la carpeta imagenes o creadas. Por lo contrario devuelve False
 def obtener_dir(nombre_imagen: str) -> str | bool:
-    return "imagenes" if existe_ruta("imagenes", nombre_imagen) else "creadas" if existe_ruta("creadas", nombre_imagen) else False
+    return "imagenes" if existe_ruta("imagenes", nombre_imagen) else "imagenes/creadas" if existe_ruta("imagenes/creadas", nombre_imagen) else False
 
 # Genero la ruta según el sistema operativo. El directorio puede ser imagenes o creadas y un nombre de la imagen.
 def formatear_ruta(directorio: str, nombre_imagen: str) -> str:
@@ -35,6 +35,7 @@ def mostrar_debug(texto: str, debug: bool):
         print(texto)
 
 # Guarda la imagen en el directorio "creadas"
+"""
 def menu_guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
     if guardar:
         guardar_imagen(nombre_imagen, imagen)
@@ -46,6 +47,7 @@ def menu_guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
                 print("La imagen generada no se va a guardar")
             else:
                 guardar_imagen(nombre_imagen, imagen)
+"""
 
 def guardar_imagen(nombre_imagen:str, imagen: str):
     cv2.imwrite(formatear_ruta("creadas", nombre_imagen), imagen)
@@ -53,7 +55,7 @@ def guardar_imagen(nombre_imagen:str, imagen: str):
 
 # Formatea el nombre de la imagen añadiendole un texto identificativo
 def formatear_nombre_imagen(nombre_imagen: str, texto: str) -> str:
-    return f"{nombre_imagen.split(".")[0]}{texto}{nombre_imagen.split(".")[1]}"
+    return f"{nombre_imagen.split(".")[0]}{texto}.{nombre_imagen.split(".")[1]}"
 
 def mostrar_menu(nombre_imagen: str) -> any:
     print("BIENVENIDO A LOS EJERCICIOS DE OPENCV VOLUMEN 1")
@@ -117,7 +119,7 @@ def menu() -> str:
 
 #############################################################################
 ## 1) Crea una función que pasándole la ruta de una imagen, la rote 180 grados y genere una nueva imagen.
-def rotar_180_deg(nombre_imagen: str, guardar: bool = False, debug: bool = False) -> str:
+def rotar_180_deg(nombre_imagen: str, debug: bool = False) -> str:
     imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
 
 
@@ -127,17 +129,18 @@ def rotar_180_deg(nombre_imagen: str, guardar: bool = False, debug: bool = False
 
 #############################################################################
 ## 3) Crea una función que pasándole la ruta de una imagen, genere una nueva imagen a partir ella pero en escala de grises.
-def imagen_gris(nombre_imagen :str, guardar: bool = False, debug: bool = False) -> str:
+def imagen_gris(nombre_imagen :str, debug: bool = False) -> str:
     # Cargamos la imagen en memoria
     imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
 
     grises = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
     nombre_nueva_imagen = formatear_nombre_imagen(nombre_imagen, "_gris")
+    print(nombre_nueva_imagen)
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
     mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
 
-    menu_guardar_imagen(nombre_nueva_imagen, grises, guardar)
+    guardar_imagen(nombre_nueva_imagen, grises)
     return nombre_nueva_imagen
 
 #############################################################################
