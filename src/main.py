@@ -5,11 +5,12 @@ import os
 
 # print(sys.argv) # Muestra todos los argumentos pasados por consola
 
-imagen = sys.argv[1]
+imagen = os.path.join("imagenes", sys.argv[1].lower())
 mostrar = sys.argv[2]
-debug = True if len(sys.argv) == 3 else False
+debug = True if len(sys.argv) > 3 else False
 
-cv_vol1.mostrar_imagen(imagen)
+# cv_vol1.mostrar_imagen(imagen)
+cv_vol1.mostrar_menu(imagen)
 
 
 #############################################################################

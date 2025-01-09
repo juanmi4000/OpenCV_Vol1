@@ -34,26 +34,91 @@ def mostrar_debug(texto: str, debug: bool):
     if debug:
         print(texto)
 
-# Guarda la imagen en la carpeta creadas
-def guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
+# Guarda la imagen en el directorio "creadas"
+def menu_guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
     if guardar:
-        # La guardamos en memoria en un fichero distinto y devolvemos la ruta
-        cv2.imwrite(formatear_ruta("creadas", nombre_imagen), imagen)
-        print("Imagen guardada en el directorio creadas")
+        guardar_imagen(nombre_imagen, imagen)
     else: 
-        print("La imagen generada no se va a guardar")
+        opcion = "no"
+        while len(opcion) > 1:
+            opcion = input("¿Está seguro que no quiere guardar la imagen? [S/N]").lower()
+            if opcion == "S":
+                print("La imagen generada no se va a guardar")
+            else:
+                guardar_imagen(nombre_imagen, imagen)
+
+def guardar_imagen(nombre_imagen:str, imagen: str):
+    cv2.imwrite(formatear_ruta("creadas", nombre_imagen), imagen)
+    print("Imagen guardada en el directorio creadas")
 
 # Formatea el nombre de la imagen añadiendole un texto identificativo
 def formatear_nombre_imagen(nombre_imagen: str, texto: str) -> str:
     return f"{nombre_imagen.split(".")[0]}{texto}{nombre_imagen.split(".")[1]}"
+
+def mostrar_menu(nombre_imagen: str) -> any:
+    print("BIENVENIDO A LOS EJERCICIOS DE OPENCV VOLUMEN 1")
+
+    print(f"La imagen elegida es {nombre_imagen}")
+
+    # Comprobar que se un número
+    opcion = int(input(menu()))
+    ejecutar_opcion(opcion)
+    
+
+def ejecutar_opcion(opcion: int):
+    if opcion == 1:
+        pass
+    elif opcion == 2:
+        pass
+    elif opcion == 3:
+        pass
+    elif opcion == 4:
+        pass
+    elif opcion == 5:
+        pass
+    elif opcion == 6:
+        pass
+    elif opcion == 7:
+        pass
+    elif opcion == 8:
+        pass
+    elif opcion == 9:
+        pass
+    elif opcion == 10:
+        pass
+    elif opcion == 11:
+        pass
+    elif opcion == 12:
+        pass
+
+def menu() -> str: 
+    return """
+    ¿Qué desea hacer con la imagén?
+        1. Girar 180º
+        2. Invertir colores
+        3. Escala de grises
+        4. Mostrar cuadrado a partir de dos coordenadas
+        5. Invertir colores en un cuadrado
+        6. Recortar imagen para obtener valores pares
+        7. Obtener la imagen espejo
+        8. Invertir mitad izquierda y copiar en la derecha
+        9. Invertir mitad superior y copiar en la inferior
+        10. Generar HTML con la imagen original y las tres anteriores
+        11. Mostrar un cuadrado y un nombre
+        12. Enborronar imagen en un zona determinada
+    
+    Elige un opción de 1 a 12: 
+    """
+
+
 
 
 ## Se proponen los siguientes ejercicios, que formarán parte de la librería imagenes.py:
 
 #############################################################################
 ## 1) Crea una función que pasándole la ruta de una imagen, la rote 180 grados y genere una nueva imagen.
-def rotar_180_deg(ruta_imagen):
-    pass
+def rotar_180_deg(nombre_imagen: str, guardar: bool = False, debug: bool = False) -> str:
+    imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
 
 
 #############################################################################
@@ -62,9 +127,9 @@ def rotar_180_deg(ruta_imagen):
 
 #############################################################################
 ## 3) Crea una función que pasándole la ruta de una imagen, genere una nueva imagen a partir ella pero en escala de grises.
-def imagen_gris(nombre_imagen :str, guardar=False, debug=False):
+def imagen_gris(nombre_imagen :str, guardar: bool = False, debug: bool = False) -> str:
     # Cargamos la imagen en memoria
-    imagen = cv2.imread(nombre_imagen.lower(), cv2.IMREAD_UNCHANGED)
+    imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
 
     grises = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
@@ -72,7 +137,7 @@ def imagen_gris(nombre_imagen :str, guardar=False, debug=False):
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
     mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
 
-    guardar_imagen(nombre_nueva_imagen, grises, guardar)
+    menu_guardar_imagen(nombre_nueva_imagen, grises, guardar)
     return nombre_nueva_imagen
 
 #############################################################################
