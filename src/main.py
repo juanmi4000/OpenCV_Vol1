@@ -5,9 +5,9 @@ import os
 
 # print(sys.argv) # Muestra todos los argumentos pasados por consola
 
-imagen = os.path.join("imagenes", sys.argv[1].lower())
-# mostrar = sys.argv[2]
-debug = True if len(sys.argv) > 3 else False
+imagen = sys.argv[1].lower()
+# debug = True if len(sys.argv) > 2 else False
+debug = False
 
 # cv_vol1.mostrar_imagen(imagen)
 # cv_vol1.mostrar_menu(imagen)
@@ -15,7 +15,8 @@ debug = True if len(sys.argv) > 3 else False
 
 #############################################################################
 # Ejercicio 1
-
+imangen_generada = cv_vol1.rotar_180_deg(imagen, debug)
+cv_vol1.mostrar_imagen(imangen_generada)
 
 #############################################################################
 # Ejercicio 2
@@ -23,8 +24,7 @@ debug = True if len(sys.argv) > 3 else False
 
 #############################################################################
 # Ejercicio 3
-cv_vol1.imagen_gris(imagen)
-imangen_generada = cv_vol1.imagen_gris(imagen)
+# imangen_generada = cv_vol1.imagen_gris(imagen, debug)
 # cv_vol1.mostrar_imagen(imangen_generada)
 
 #############################################################################

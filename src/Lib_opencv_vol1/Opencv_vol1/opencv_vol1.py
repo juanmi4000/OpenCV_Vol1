@@ -8,26 +8,18 @@ import os
 
 
 def mostrar_imagen(nombre_imagen: str):
-    dir_imagen = obtener_dir(nombre_imagen)
-    if dir_imagen != False:
-        imagen = cv2.imread(formatear_ruta(dir_imagen, nombre_imagen))
-        cv2.imshow("Imagen", imagen)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-    else:
-        print("La imagen no existe")
-
-# Comprueba que si la imagen exite en la carpeta imagenes o creadas. Por lo contrario devuelve False
-def obtener_dir(nombre_imagen: str) -> str | bool:
-    return "imagenes" if existe_ruta("imagenes", nombre_imagen) else "imagenes/creadas" if existe_ruta("imagenes/creadas", nombre_imagen) else False
+    # hacer que se ajuste a la pantalla
+    imagen = cv2.imread(nombre_imagen)
+    cv2.imshow("Imagen", imagen)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 # Genero la ruta según el sistema operativo. El directorio puede ser imagenes o creadas y un nombre de la imagen.
 def formatear_ruta(directorio: str, nombre_imagen: str) -> str:
+    # Debería de pasarle una lista
     return os.path.join(directorio, nombre_imagen)
 
-# Compruebo si existe una imagen
-def existe_ruta(directorio: str, nombre_imagen: str)-> bool:
-    return os.path.exists(formatear_ruta(directorio, nombre_imagen))
+# Debería de comprobar que la imagen existe
 
 # Muestra mensaje si la variable debug es True
 def mostrar_debug(texto: str, debug: bool):
@@ -50,7 +42,7 @@ def menu_guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
 """
 
 def guardar_imagen(nombre_imagen:str, imagen: str):
-    cv2.imwrite(formatear_ruta("creadas", nombre_imagen), imagen)
+    cv2.imwrite(nombre_imagen, imagen)
     print("Imagen guardada en el directorio creadas")
 
 # Formatea el nombre de la imagen añadiendole un texto identificativo
@@ -120,23 +112,46 @@ def menu() -> str:
 #############################################################################
 ## 1) Crea una función que pasándole la ruta de una imagen, la rote 180 grados y genere una nueva imagen.
 def rotar_180_deg(nombre_imagen: str, debug: bool = False) -> str:
-    imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+
+    img_rotada = cv2.rotate(imagen, cv2.ROTATE_180)
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_rotada_180"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, img_rotada)
+    return nombre_nueva_imagen
+
+
 
 
 #############################################################################
 ## 2) Crea una función que pasándole la ruta de una imagen, genere una nueva imagen a partir de ella con los colores invertidos
+def invertir_colores(nombre_imagen: str, debug: bool = False) -> str:
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHAGED)
+
+    img_colores_invertidos = "Poner aquí el método"
+
+    nombre_nueva_imagen = formatear_nombre_imagen(nombre_imagen, "_invertir_colores")
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, img_colores_invertidos)
+    return nombre_nueva_imagen
 
 
 #############################################################################
 ## 3) Crea una función que pasándole la ruta de una imagen, genere una nueva imagen a partir ella pero en escala de grises.
 def imagen_gris(nombre_imagen :str, debug: bool = False) -> str:
     # Cargamos la imagen en memoria
-    imagen = cv2.imread(nombre_imagen, cv2.IMREAD_UNCHANGED)
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
 
     grises = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
-    nombre_nueva_imagen = formatear_nombre_imagen(nombre_imagen, "_gris")
-    print(nombre_nueva_imagen)
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_gris"))
+    
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
     mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
 
