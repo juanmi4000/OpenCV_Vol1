@@ -161,41 +161,67 @@ def imagen_gris(nombre_imagen :str, debug: bool = False) -> str:
 #############################################################################
 ## 4) Crea una función que pasándole la ruta de una imagen, marque un cuadrado a partir de dos coordenadas.
 ## Nota: esta función no reconoce el rostro, se le han pasado las coordenadas del marco como parámetros.
-
+def dibujar_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 5) Crea una función que pasándole la ruta de una imagen, invierta los colores de un cuadrado a partir de dos coordenadas, pasadas por parámetro.
 ## Nota: se debe generar una imagen igual pero con los clores invertidos en un determinado cuadrado de la imagen.
-
+def invertir_color_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 6) Crea una función que pasándole la ruta de una imagen, la recorte para evitar dimensiones con valores impares
-
+def recortar_img_impares(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 7) Crea una función que pasándole la ruta de una imagen, retorne la imagen espejada.
-
+def imagen_espejo(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 8) Crea una función que pasándole la ruta de una imagen, invierte la mitad izquierda y la copie en la derecha.
-
+def invertir_mitad_izquierda_unir_derecha(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 9) Crea una función que pasándole la ruta de una imagen, invierta la mitad superior y la copie en la inferior, efecto espejo por la horizontal.
+def invertir_mitad_superior_unir_inferior(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
+
 
 #############################################################################
 ## 10) Crea una función que pasándole la ruta de una imagen, genere un documento html donde muestre la imagen original y las generadas en las tres funciones anteriores en una tabla.
+def generar_html(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 
 #############################################################################
 ## 11) Crea una función que pasándole la ruta de una imagen, además de marcar un cuadrado a partir de dos coordenadas, como hizo en el ejercicio4, añada un texto en la parte inferior del cuadrado.
 ## Nota: Al igual que en el ejercicio 4, realmente no se está detectando caras, se están pasando las coordenadas del marco a la función, además de la imagen y el texto.
+def dibujar_cuadrado_texto (nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 
 #############################################################################
 ## 12) Crea una función que pasándole la ruta de una imagen, emborrane una zona determinada.
 ## Nota: para emborronar se ha utilizado la función medianBlur con un tamaño de kernel muy alto.
-
+def emborronar_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 #############################################################################
 ## 13) Ahora si. Crea una función que pasándole la ruta de una imagen, detecte y marque las caras de dicha imagen utilizando la funcionalidad de CV2. Esta librería posisibilita la detección de objetos mediante aprendizaje automático en cascada. Podemos entrenar nuestros propios clasificadores, pero para este ejercicio utilizaremos un clasificador preentrenado que puedes encontrar en el GitHub de OpenCV (opencv/data/haarcascades/).
+
+
+
+#############################################################################
+## 14) Crea una función que realice capturas con la webcam y marque cara y ojos del rostro.
+
+
+
+#############################################################################
+## 15) Crea una función que realice una captura con la webcam, como en el ejercicio anterior, pero que esta vez, en lugar de marcarla, la emborrone.
+
+
+
