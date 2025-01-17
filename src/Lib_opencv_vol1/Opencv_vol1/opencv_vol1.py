@@ -5,6 +5,7 @@
 # Importación de librerías
 import cv2
 import os
+from typing import Tuple
 
 
 def mostrar_imagen(nombre_imagen: str):
@@ -45,49 +46,82 @@ def guardar_imagen(nombre_imagen:str, imagen: str):
     cv2.imwrite(nombre_imagen, imagen)
     print("Imagen guardada en el directorio creadas")
 
+def pedir_color() -> Tuple[int, int, int] | bool:
+    opcion = int(input("Elige un color:\n\t1. Rojo\n\t2.Verde\n\t3.Azul"))
+    return (255, 0, 0) if opcion == 1 else (0, 255, 0) if opcion == 2 else (0, 0, 255) if opcion == 3 else False
+
+def pedir_punto() -> Tuple[int, int]:
+    x = int(input("Introdule el valor de la x: "))
+    y = int(input("Introduce el valor de la y: "))
+    return [x, y]
+
 # Formatea el nombre de la imagen añadiendole un texto identificativo
 def formatear_nombre_imagen(nombre_imagen: str, texto: str) -> str:
     return f"{nombre_imagen.split(".")[0]}{texto}.{nombre_imagen.split(".")[1]}"
 
-def mostrar_menu(nombre_imagen: str) -> any:
+def mostrar_menu(nombre_imagen: str, debug: bool) -> any:
     print("BIENVENIDO A LOS EJERCICIOS DE OPENCV VOLUMEN 1")
 
     print(f"La imagen elegida es {nombre_imagen}")
 
-    # Comprobar que se un número
+    # Comprobar que es un número
     opcion = int(input(menu()))
-    ejecutar_opcion(opcion)
+    ejecutar_opcion(opcion, nombre_imagen, debug)
+
+def ordenar_puntos(punto1: Tuple[int, int], punto2: Tuple[int, int]) -> Tuple[Tuple[int, int], Tuple[int, int]]:
+    x1, x2 = min(punto1[0], punto2[0]), max(punto1[0], punto2[0])
+    y1, y2 = min(punto1[1], punto2[1]), max(punto1[1], punto2[1])
+    return ((x1, y1), (x2, y2))
     
 
-def ejecutar_opcion(opcion: int):
+def ejecutar_opcion(opcion: int, imagen: str, debug: bool) -> any:
     if opcion == 1:
-        pass
+        imangen_generada = rotar_180_deg(imagen, debug)
+        mostrar_imagen(imangen_generada)
     elif opcion == 2:
-        pass
+        imagen_generada = invertir_colores(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 3:
-        pass
+        imangen_generada = imagen_gris(imagen, debug)
+        mostrar_imagen(imangen_generada)
     elif opcion == 4:
-        pass
+        color = pedir_color()
+        if not color:
+            while not color:
+                print("Color no válidao, escoja un color válido")
+                color = pedir_color()
+        punto1 = punto
+        punto2 = ()
+        imagen_generada = dibujar_cuadrado(imagen, punto1, punto2, color, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 5:
-        pass
+        punto1 = ()
+        punto2 = ()
+        imagen_generada = invertir_color_cuadrado(imagen, punto1, punto2, color, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 6:
-        pass
+        imagen_generada = recortar_img_impares(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 7:
-        pass
+        imagen_generada = imagen_espejo(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 8:
-        pass
+        imagen_generada = invertir_mitad_izquierda_unir_derecha(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 9:
-        pass
+        imagen_generada = invertir_mitad_superior_unir_inferior(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 10:
         pass
     elif opcion == 11:
-        pass
+        imagen_generada = dibujar_cuadrado_texto(imagen, debug)
+        mostrar_imagen(imagen_generada)
     elif opcion == 12:
         pass
 
 def menu() -> str: 
     return """
-    ¿Qué desea hacer con la imagén?
+    ¿Qué desea hacer con la imagen?
         1. Girar 180º
         2. Invertir colores
         3. Escala de grises
@@ -101,8 +135,7 @@ def menu() -> str:
         11. Mostrar un cuadrado y un nombre
         12. Enborronar imagen en un zona determinada
     
-    Elige un opción de 1 a 12: 
-    """
+    Elige un opción de 1 a 12: """
 
 
 
@@ -119,7 +152,7 @@ def rotar_180_deg(nombre_imagen: str, debug: bool = False) -> str:
     nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_rotada_180"))
 
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
-    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+    mostrar_debug(f"Se generará la imagen rotada 180 grados: {nombre_nueva_imagen}", debug)
 
     guardar_imagen(nombre_nueva_imagen, img_rotada)
     return nombre_nueva_imagen
@@ -130,11 +163,11 @@ def rotar_180_deg(nombre_imagen: str, debug: bool = False) -> str:
 #############################################################################
 ## 2) Crea una función que pasándole la ruta de una imagen, genere una nueva imagen a partir de ella con los colores invertidos
 def invertir_colores(nombre_imagen: str, debug: bool = False) -> str:
-    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHAGED)
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
 
-    img_colores_invertidos = "Poner aquí el método"
+    img_colores_invertidos = cv2.bitwise_not(imagen)
 
-    nombre_nueva_imagen = formatear_nombre_imagen(nombre_imagen, "_invertir_colores")
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_invertir_colores")) 
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
     mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
 
@@ -161,34 +194,133 @@ def imagen_gris(nombre_imagen :str, debug: bool = False) -> str:
 #############################################################################
 ## 4) Crea una función que pasándole la ruta de una imagen, marque un cuadrado a partir de dos coordenadas.
 ## Nota: esta función no reconoce el rostro, se le han pasado las coordenadas del marco como parámetros.
-def dibujar_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+def dibujar_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], color: Tuple[int, int, int] = (255, 0, 0), debug: bool = False,) -> str:
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+    cuadrado = cv2.rectangle(imagen, punto1, punto2, color, 4)
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_cuadrado"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, cuadrado)
+
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 5) Crea una función que pasándole la ruta de una imagen, invierta los colores de un cuadrado a partir de dos coordenadas, pasadas por parámetro.
 ## Nota: se debe generar una imagen igual pero con los clores invertidos en un determinado cuadrado de la imagen.
-def invertir_color_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+def invertir_color_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], debug: bool = False) -> str:
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+
+    (x1, y1), (x2, y2) = ordenar_puntos(punto1, punto2)
+
+    parte_invertida = imagen[y1:y2, x1:x2]
+
+    imagen[y1:y2, x1:x2] = cv2.bitwise_not(parte_invertida)
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_cuadrado_invertido"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen)
+
+    
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 6) Crea una función que pasándole la ruta de una imagen, la recorte para evitar dimensiones con valores impares
 def recortar_img_impares(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+    
+    alto, ancho = imagen.shape[:2]
+
+    if alto % 2 != 0:
+        alto -= 1
+    if ancho % 2 != 0:
+        ancho -= 1
+
+    imagen_recortada = imagen[:alto, :ancho]
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_dim_par"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con los colores en escala de grises llamada: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen_recortada)
+
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 7) Crea una función que pasándole la ruta de una imagen, retorne la imagen espejada.
 def imagen_espejo(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+    
+    # 0: Reflejo vertical (de arriba hacia abajo).
+    # 1: Reflejo horizontal (de izquierda a derecha, como un espejo).
+    # -1: Reflejo en ambas direcciones (horizontal y vertical).
+
+    imagen_espejo = cv2.flip(imagen, 1)
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_espejo"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen espejo: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen_espejo)
+
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 8) Crea una función que pasándole la ruta de una imagen, invierte la mitad izquierda y la copie en la derecha.
 def invertir_mitad_izquierda_unir_derecha(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+
+    alto, ancho = imagen.shape[:2]
+
+    if alto % 2 != 0:
+        alto -= 1
+    if ancho % 2 != 0:
+        ancho -= 1
+
+    mitad_izquierda_invertida = cv2.flip(imagen[:alto, :int(ancho/2)], 1)
+
+    imagen[:alto, int(ancho/2):ancho] = mitad_izquierda_invertida
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_espejo_mitad_izquierdo_copie_derecho"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen invertida por la mitad izquierda y copiada en la derecha: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen)
+
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 9) Crea una función que pasándole la ruta de una imagen, invierta la mitad superior y la copie en la inferior, efecto espejo por la horizontal.
 def invertir_mitad_superior_unir_inferior(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+
+    alto, ancho = imagen.shape[:2]
+
+    if alto % 2 != 0:
+        alto -= 1
+    if ancho % 2 != 0:
+        ancho -= 1
+
+    mitad_superior_invertida = cv2.flip(imagen[:int(alto/2), :ancho], 0)
+
+    imagen[int(alto/2):alto, :ancho] = mitad_superior_invertida
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_espejo_mitad_superior_copie_inferior"))
+
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen invertida por la mitad izquierda y copiada en la derecha: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen)
+    
+    return nombre_nueva_imagen
 
 
 #############################################################################
@@ -212,16 +344,20 @@ def emborronar_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
 
 #############################################################################
 ## 13) Ahora si. Crea una función que pasándole la ruta de una imagen, detecte y marque las caras de dicha imagen utilizando la funcionalidad de CV2. Esta librería posisibilita la detección de objetos mediante aprendizaje automático en cascada. Podemos entrenar nuestros propios clasificadores, pero para este ejercicio utilizaremos un clasificador preentrenado que puedes encontrar en el GitHub de OpenCV (opencv/data/haarcascades/).
+def detectar_marcar_cara(nombre_imagen: str, debug: bool = False) -> str:
+    return ""
 
 
 
 #############################################################################
 ## 14) Crea una función que realice capturas con la webcam y marque cara y ojos del rostro.
-
+def captura_marca_cara_ojos():
+    return ""
 
 
 #############################################################################
 ## 15) Crea una función que realice una captura con la webcam, como en el ejercicio anterior, pero que esta vez, en lugar de marcarla, la emborrone.
-
+def captura_emborronar():
+    return ""
 
 
