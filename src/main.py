@@ -22,6 +22,8 @@ debug = False
 # 2. Realizar una pequeña guía sonre los argumentos que le paso
 # 3. Comprobar que los debug estén bien escritos
 # 4. Comprobar si antes de guardar la imagen ya existe
+# 5. Hacer que formatear ruta acepte varios directorios
+# 6. Documentar el código
 
 #############################################################################
 # Ejercicio 1 (Realizado)
@@ -81,13 +83,15 @@ debug = False
 
 
 #############################################################################
-# Ejercicio 10
-# imagen_generada = cv_vol1.generar_html(imagen, debug)
+# Ejercicio 10 (Realizado)
+# cv_vol1.generar_html(imagen, debug)
 
 
 #############################################################################
-# Ejercicio 11
-# imagen_generada = cv_vol1.dibujar_cuadrado_texto(imagen, debug)
+# Ejercicio 11 (Realizado)
+# punto1 = (1500, 250)
+# punto2 = (2000, 800)
+# imagen_generada = cv_vol1.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", RED, debug)
 # cv_vol1.mostrar_imagen(imagen_generada)
 
 
