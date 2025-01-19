@@ -420,8 +420,22 @@ def dibujar_cuadrado_texto(nombre_imagen: str, punto1: Tuple[int, int], punto2: 
 #############################################################################
 ## 12) Crea una función que pasándole la ruta de una imagen, emborrane una zona determinada.
 ## Nota: para emborronar se ha utilizado la función medianBlur con un tamaño de kernel muy alto.
-def emborronar_cuadrado(nombre_imagen: str, debug: bool = False) -> str:
-    return ""
+def emborronar_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], debug: bool = False) -> str:
+    imagen = cv2.imread(formatear_ruta("imagenes", nombre_imagen), cv2.IMREAD_UNCHANGED)
+
+    zona_borrosa = imagen[punto1[1]:punto2[1], punto1[0]:punto2[0]]
+
+    img_emborronada =  cv2.medianBlur(zona_borrosa, 99)
+
+    imagen[punto1[1]:punto2[1], punto1[0]:punto2[0]] = img_emborronada
+
+    nombre_nueva_imagen = formatear_ruta("imagenes/creadas", formatear_nombre_imagen(nombre_imagen, "_cuadrado_emborronado"))
+    mostrar_debug(f"A partir de la imagen: {imagen}", debug)
+    mostrar_debug(f"Se generará la imagen con un cuadrado según unas coordenadas y un texto: {nombre_nueva_imagen}", debug)
+
+    guardar_imagen(nombre_nueva_imagen, imagen)
+
+    return nombre_nueva_imagen
 
 #############################################################################
 ## 13) Ahora si. Crea una función que pasándole la ruta de una imagen, detecte y marque las caras de dicha imagen utilizando la funcionalidad de CV2. Esta librería posisibilita la detección de objetos mediante aprendizaje automático en cascada. Podemos entrenar nuestros propios clasificadores, pero para este ejercicio utilizaremos un clasificador preentrenado que puedes encontrar en el GitHub de OpenCV (opencv/data/haarcascades/).
@@ -433,8 +447,26 @@ def detectar_marcar_cara(nombre_imagen: str, debug: bool = False) -> str:
 #############################################################################
 ## 14) Crea una función que realice capturas con la webcam y marque cara y ojos del rostro.
 def captura_marca_cara_ojos():
-    return ""
-
+    modelo_cara = cv2.CascadeClassifier("modelos/haarcascade_frontalface_default.xml")
+    modelo_ojos = cv2.CascadeClassifier("modelos/haarcascade_frontalface_default.xml")
+    video = cv2.VideoCapture(0)
+    while video.isOpened():
+        ret, frame = video.read()
+        if frame is not None:
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = modelo_cara.detectMultiScale(gray, 1.3, 5)
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                roi_gray = gray[y:y + h, x:x + w]
+                roi_color = frame[y:y + h, x:x + w]
+                eyes = modelo_ojos.detectMultiScale(roi_gray)
+                for (ex, ey, ew, eh) in eyes:
+                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
+            cv2.imshow('Video', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    video.release()
+    cv2.destroyAllWindows()
 
 #############################################################################
 ## 15) Crea una función que realice una captura con la webcam, como en el ejercicio anterior, pero que esta vez, en lugar de marcarla, la emborrone.
