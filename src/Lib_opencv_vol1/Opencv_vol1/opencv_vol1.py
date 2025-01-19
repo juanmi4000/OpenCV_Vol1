@@ -440,6 +440,7 @@ def emborronar_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tup
 #############################################################################
 ## 13) Ahora si. Crea una función que pasándole la ruta de una imagen, detecte y marque las caras de dicha imagen utilizando la funcionalidad de CV2. Esta librería posisibilita la detección de objetos mediante aprendizaje automático en cascada. Podemos entrenar nuestros propios clasificadores, pero para este ejercicio utilizaremos un clasificador preentrenado que puedes encontrar en el GitHub de OpenCV (opencv/data/haarcascades/).
 def detectar_marcar_cara(nombre_imagen: str, debug: bool = False) -> str:
+    imagen = cv2.imread()
     return ""
 
 
@@ -448,7 +449,7 @@ def detectar_marcar_cara(nombre_imagen: str, debug: bool = False) -> str:
 ## 14) Crea una función que realice capturas con la webcam y marque cara y ojos del rostro.
 def captura_marca_cara_ojos():
     modelo_cara = cv2.CascadeClassifier("modelos/haarcascade_frontalface_default.xml")
-    modelo_ojos = cv2.CascadeClassifier("modelos/haarcascade_frontalface_default.xml")
+    modelo_ojos = cv2.CascadeClassifier("modelos/haarcascade_eye.xml")
     video = cv2.VideoCapture(0)
     while video.isOpened():
         ret, frame = video.read()
