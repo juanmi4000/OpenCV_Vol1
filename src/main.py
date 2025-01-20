@@ -22,15 +22,16 @@ debug = sys.argv[3] if len(sys.argv) >= 4 else False
 # 1. Que te lo muestre según la pantalla. (Realizado)
 # 2. Realizar una pequeña guía sobre los argumentos que le paso (Realizado)
 # 3. Comprobar que los debug estén bien escritos (Realizado, le dejo en valor por defecto para que siempre esté en falso)
-# 4. Comprobar si antes de guardar la imagen ya existe
+# 4. Comprobar si antes de guardar la imagen ya existe (Realizado) (Opencv sobreescribe la imagen si existe. En este caso nos viene bien pero en otra ocasión tengo que tener cuidado)
 # 5. Hacer que formatear ruta acepte varios directorios
 # 6. Documentar el código
-# 7. Importar como librería solo las funciones necesarias
+# 7. Importar como librería solo las funciones necesarias (Realizado)
 
 if menu_consola == 0:
     cv_vol1.mostrar_menu(imagen, debug)
 
 elif menu_consola == 1:
+    print(os.path.join(*("hola", "adios", "que", "tal"), "hasta luego"))
     #############################################################################
     # Ejercicio 1 (Realizado)
     # imangen_generada = cv_vol1.rotar_180_deg(imagen, debug)
@@ -119,7 +120,7 @@ elif menu_consola == 1:
 
     #############################################################################
     # Ejercicio 15 (Realizado)
-    cv_vol1.captura_emborronar()
+    # cv_vol1.captura_emborronar()
 
 
 else: 

@@ -18,30 +18,13 @@ def mostrar_imagen(nombre_imagen: str):
 
 # Genero la ruta según el sistema operativo. El directorio puede ser imagenes o creadas y un nombre de la imagen.
 def formatear_ruta(directorio: str, nombre_imagen: str) -> str:
-    # Debería de pasarle una lista
-    return os.path.join(directorio, nombre_imagen)
-
-# Debería de comprobar que la imagen existe
+    
+    return os.path.join(*directorio, nombre_imagen)
 
 # Muestra mensaje si la variable debug es True
 def mostrar_debug(texto: str, debug: bool):
     if debug:
         print(texto)
-
-# Guarda la imagen en el directorio "creadas"
-"""
-def menu_guardar_imagen(nombre_imagen:str, imagen: str, guardar: bool):
-    if guardar:
-        guardar_imagen(nombre_imagen, imagen)
-    else: 
-        opcion = "no"
-        while len(opcion) > 1:
-            opcion = input("¿Está seguro que no quiere guardar la imagen? [S/N]").lower()
-            if opcion == "S":
-                print("La imagen generada no se va a guardar")
-            else:
-                guardar_imagen(nombre_imagen, imagen)
-"""
 
 def guardar_imagen(nombre_imagen:str, imagen: str):
     cv2.imwrite(nombre_imagen, imagen)
