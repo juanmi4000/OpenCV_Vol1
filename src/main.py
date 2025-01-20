@@ -118,7 +118,7 @@ elif menu_consola == 1:
     # cv_vol1.captura_marca_cara_ojos(BLUE, GREEN)
 
     #############################################################################
-    # Ejercicio 15
+    # Ejercicio 15 (Realizado)
     cv_vol1.captura_emborronar()
 
 

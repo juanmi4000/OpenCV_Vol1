@@ -498,8 +498,9 @@ def captura_emborronar():
             gris = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             caras = modelo_cara.detectMultiScale(gris, 1.3, 5)
             for (x, y, w, h) in caras:
-                zona_borrosa = frame[(x, y), (x + w, y + h)]
-                cv2.medianBlur(zona_borrosa, 99)
+                zona_borrosa = frame[y:y + h, x:x + w]
+                zona_borrosa = cv2.medianBlur(zona_borrosa, 99)
+                frame[y:y + h, x:x + w] = zona_borrosa
             cv2.imshow('Video', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
