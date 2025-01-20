@@ -1,11 +1,8 @@
 # Importación de las librerías
-from Lib_opencv_vol1 import Opencv_vol1 as cv_vol1
+from Lib_opencv_vol1.Opencv_vol1 import imagenes as img
+from Lib_opencv_vol1.Opencv_vol1 import BLUE, GREEN, RED
 import sys
 import os
-
-BLUE = [255, 0, 0]
-GREEN = [0, 255, 0]
-RED = [0, 0, 255]
 
 # print(sys.argv) # Muestra todos los argumentos pasados por consola
 
@@ -26,101 +23,101 @@ debug = sys.argv[3] if len(sys.argv) >= 4 else False
 # 5. Hacer que formatear ruta acepte varios directorios
 # 6. Documentar el código
 # 7. Importar como librería solo las funciones necesarias (Realizado)
+# 8. Comprobar que la imagen no sea None
 
 if menu_consola == 0:
-    cv_vol1.mostrar_menu(imagen, debug)
+    img.mostrar_menu(imagen, debug)
 
 elif menu_consola == 1:
-    print(os.path.join(*("hola", "adios", "que", "tal"), "hasta luego"))
     #############################################################################
     # Ejercicio 1 (Realizado)
-    # imangen_generada = cv_vol1.rotar_180_deg(imagen, debug)
-    # cv_vol1.mostrar_imagen(imangen_generada)
+    imangen_generada = img.rotar_180_deg(imagen, debug)
+    img.mostrar_imagen(imangen_generada)
 
     #############################################################################
     # Ejercicio 2 (Realizado)
-    # imagen_generada = cv_vol1.invertir_colores(imagen, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.invertir_colores(imagen, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 3 (Realizado)
-    # imangen_generada = cv_vol1.imagen_gris(imagen, debug)
-    # cv_vol1.mostrar_imagen(imangen_generada)
+    # imangen_generada = img.imagen_gris(imagen, debug)
+    # img.mostrar_imagen(imangen_generada)
 
     #############################################################################
     # Ejercicio 4 (Realizado)
     # punto1 = (1500, 250)
     # punto2 = (2000, 800)
-    # imagen_generada = cv_vol1.dibujar_cuadrado(imagen, punto1, punto2, RED, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.dibujar_cuadrado(imagen, punto1, punto2, RED, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 5 (Realizado)
     # punto1 = (400, 500)
     # punto2 = (500, 600)
-    # imagen_generada = cv_vol1.invertir_color_cuadrado(imagen, punto1, punto2, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.invertir_color_cuadrado(imagen, punto1, punto2, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 6 (Realizado)
-    # imagen_generada = cv_vol1.recortar_img_impares(imagen, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.recortar_img_impares(imagen, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 7 (Realizado)
-    # imagen_generada = cv_vol1.imagen_espejo(imagen, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.imagen_espejo(imagen, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 8 (Realizado)
-    #imagen_generada = cv_vol1.invertir_mitad_izquierda_unir_derecha(imagen, debug)
-    #cv_vol1.mostrar_imagen(imagen_generada)
+    #imagen_generada = img.invertir_mitad_izquierda_unir_derecha(imagen, debug)
+    #img.mostrar_imagen(imagen_generada)
 
 
 
     #############################################################################
     # Ejercicio 9 (Realizado)
-    # imagen_generada = cv_vol1.invertir_mitad_superior_unir_inferior(imagen, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.invertir_mitad_superior_unir_inferior(imagen, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 10 (Realizado)
-    # cv_vol1.generar_html(imagen, debug)
+    # img.generar_html(imagen, debug)
 
 
     #############################################################################
     # Ejercicio 11 (Realizado)
     # punto1 = (1500, 250)
     # punto2 = (2000, 800)
-    # imagen_generada = cv_vol1.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", RED, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", RED, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
     # Ejercicio 12 (Realizado)
     # punto1 = (1500, 250)
     # punto2 = (2000, 800)
-    # imagen_generada = cv_vol1.emborronar_cuadrado(imagen,punto1, punto2,debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.emborronar_cuadrado(imagen,punto1, punto2,debug)
+    # img.mostrar_imagen(imagen_generada)
 
     #############################################################################
     # Ejercicio 13
-    # imagen_generada = cv_vol1.detectar_marcar_cara(imagen, RED, debug)
-    # cv_vol1.mostrar_imagen(imagen_generada)
+    # imagen_generada = img.detectar_marcar_cara(imagen, RED, debug)
+    # img.mostrar_imagen(imagen_generada)
 
     #############################################################################
     # Ejercicio 14 (Realizado)
-    # cv_vol1.captura_marca_cara_ojos(BLUE, GREEN)
+    # img.captura_marca_cara_ojos(BLUE, GREEN)
 
     #############################################################################
     # Ejercicio 15 (Realizado)
-    # cv_vol1.captura_emborronar()
+    # img.captura_emborronar()
 
 
 else: 
