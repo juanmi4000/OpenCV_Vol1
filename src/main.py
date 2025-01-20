@@ -108,16 +108,18 @@ elif menu_consola == 1:
     # imagen_generada = cv_vol1.emborronar_cuadrado(imagen,punto1, punto2,debug)
     # cv_vol1.mostrar_imagen(imagen_generada)
 
-    #############i################################################################
+    #############################################################################
     # Ejercicio 13
-
+    # imagen_generada = cv_vol1.detectar_marcar_cara(imagen, RED, debug)
+    # cv_vol1.mostrar_imagen(imagen_generada)
 
     #############################################################################
-    # Ejercicio 14
-    cv_vol1.captura_marca_cara_ojos()
+    # Ejercicio 14 (Realizado)
+    # cv_vol1.captura_marca_cara_ojos(BLUE, GREEN)
 
     #############################################################################
     # Ejercicio 15
+    cv_vol1.captura_emborronar()
 
 
 else: 
