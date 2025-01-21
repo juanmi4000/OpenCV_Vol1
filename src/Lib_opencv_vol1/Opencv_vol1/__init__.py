@@ -1,1 +1,3 @@
 from .imagenes import mostrar_imagen, mostrar_menu, rotar_180_deg, invertir_colores, imagen_gris, dibujar_cuadrado, invertir_color_cuadrado, recortar_img_impares, imagen_espejo, invertir_mitad_izquierda_unir_derecha, invertir_mitad_superior_unir_inferior, generar_html, dibujar_cuadrado_texto, emborronar_cuadrado, detectar_marcar_cara, captura_marca_cara_ojos, captura_emborronar, BLUE, GREEN, RED
+
+from .imagenes2 import invertir_color_cuadrado, dibujar_cuadrado_texto, captura_marca_cara_ojos

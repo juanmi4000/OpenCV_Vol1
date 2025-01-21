@@ -1,5 +1,6 @@
 # Importación de las librerías
 from Lib_opencv_vol1.Opencv_vol1 import imagenes as img
+from Lib_opencv_vol1.Opencv_vol1 import imagenes2 as img2
 from Lib_opencv_vol1.Opencv_vol1 import BLUE, GREEN, RED
 import sys
 
@@ -18,6 +19,7 @@ if menu_consola == 0:
     img.mostrar_menu(imagen, debug)
 
 elif menu_consola == 1:
+    pass
     #############################################################################
     # Ejercicio 1 (Realizado)
     # imangen_generada = img.rotar_180_deg(imagen, debug)
@@ -44,10 +46,10 @@ elif menu_consola == 1:
 
     #############################################################################
     # Ejercicio 5 (Realizado)
-    punto1 = (400, 500)
-    punto2 = (500, 600)
-    imagen_generada = img.invertir_color_cuadrado(imagen, punto1, punto2, debug)
-    img.mostrar_imagen(imagen_generada)
+    # punto1 = (400, 500)
+    # punto2 = (500, 600)
+    # imagen_generada = img.invertir_color_cuadrado(imagen, punto1, punto2, debug)
+    # img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
@@ -111,3 +113,40 @@ elif menu_consola == 1:
 
 else: 
     print("Lo siento, los valores posibles son 0 para el menú o 1 para consola")
+
+
+# EJERCICIOS DE AMPLIACIÓN
+
+#############################################################################
+# Ejercicio 5b (Realizado)
+# punto1 = (1500, 3500)
+# punto2 = (3100, 5500)
+# imagen_generada = img2.invertir_color_cuadrado(imagen, punto1, punto2, True, debug)
+# img.mostrar_imagen(imagen_generada)
+
+
+#############################################################################
+# Ejercicio 11b (Realizado)
+# punto1 = (1500, 250)
+# punto2 = (2000, 800)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", True,False, RED, debug)
+# img.mostrar_imagen(imagen_generada)
+
+
+#############################################################################
+# Ejercicio 11c
+# punto1 = (1500, 250)
+# punto2 = (2000, 800)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", True, True, RED, debug)
+# img.mostrar_imagen(imagen_generada)
+
+#############################################################################
+# Ejercicio 11d
+# punto1 = (1500, 250)
+# punto2 = (2000, 800)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", RED, debug)
+# img.mostrar_imagen(imagen_generada)
+
+#############################################################################
+# Ejercicio 14b
+img2.captura_marca_cara_ojos(BLUE, GREEN, RED)

@@ -752,8 +752,8 @@ def captura_marca_cara_ojos(color_cara: Tuple[int, int, int], color_ojos: Tuple[
                 cv2.rectangle(frame, (x, y), (x + w, y + h), color_cara, 2)
                 region_gris = gris[y:y + h, x:x + w]
                 region_color = frame[y:y + h, x:x + w]
-                eyes = modelo_ojos.detectMultiScale(region_gris)
-                for (ex, ey, ew, eh) in eyes:
+                ojos = modelo_ojos.detectMultiScale(region_gris)
+                for (ex, ey, ew, eh) in ojos:
                     cv2.rectangle(region_color, (ex, ey), (ex + ew, ey + eh), color_ojos, 2)
             cv2.imshow('Video', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
