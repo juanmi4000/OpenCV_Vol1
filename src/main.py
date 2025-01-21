@@ -2,7 +2,6 @@
 from Lib_opencv_vol1.Opencv_vol1 import imagenes as img
 from Lib_opencv_vol1.Opencv_vol1 import BLUE, GREEN, RED
 import sys
-import os
 
 # print(sys.argv) # Muestra todos los argumentos pasados por consola
 
@@ -15,24 +14,14 @@ debug = sys.argv[3] if len(sys.argv) >= 4 else False
 # Explicación: python main.py nombre_imagen.jgp (0 - menú o 1 - consola) (mostrar los debug)
 # Ejemplo: python main.py f1.jpg 1 False
 
-# Mejoras:
-# 1. Que te lo muestre según la pantalla. (Realizado)
-# 2. Realizar una pequeña guía sobre los argumentos que le paso (Realizado)
-# 3. Comprobar que los debug estén bien escritos (Realizado, le dejo en valor por defecto para que siempre esté en falso)
-# 4. Comprobar si antes de guardar la imagen ya existe (Realizado) (Opencv sobreescribe la imagen si existe. En este caso nos viene bien pero en otra ocasión tengo que tener cuidado)
-# 5. Hacer que formatear ruta acepte varios directorios
-# 6. Documentar el código
-# 7. Importar como librería solo las funciones necesarias (Realizado)
-# 8. Comprobar que la imagen no sea None
-
 if menu_consola == 0:
     img.mostrar_menu(imagen, debug)
 
 elif menu_consola == 1:
     #############################################################################
     # Ejercicio 1 (Realizado)
-    imangen_generada = img.rotar_180_deg(imagen, debug)
-    img.mostrar_imagen(imangen_generada)
+    # imangen_generada = img.rotar_180_deg(imagen, debug)
+    # img.mostrar_imagen(imangen_generada)
 
     #############################################################################
     # Ejercicio 2 (Realizado)
@@ -55,10 +44,10 @@ elif menu_consola == 1:
 
     #############################################################################
     # Ejercicio 5 (Realizado)
-    # punto1 = (400, 500)
-    # punto2 = (500, 600)
-    # imagen_generada = img.invertir_color_cuadrado(imagen, punto1, punto2, debug)
-    # img.mostrar_imagen(imagen_generada)
+    punto1 = (400, 500)
+    punto2 = (500, 600)
+    imagen_generada = img.invertir_color_cuadrado(imagen, punto1, punto2, debug)
+    img.mostrar_imagen(imagen_generada)
 
 
     #############################################################################
