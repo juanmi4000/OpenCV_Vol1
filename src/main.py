@@ -129,24 +129,25 @@ else:
 # Ejercicio 11b (Realizado)
 # punto1 = (1500, 250)
 # punto2 = (2000, 800)
-# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", True,False, RED, debug)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, True,False, RED, "Paca", debug)
 # img.mostrar_imagen(imagen_generada)
 
 
 #############################################################################
-# Ejercicio 11c
+# Ejercicio 11c (Realizado)
 # punto1 = (1500, 250)
 # punto2 = (2000, 800)
-# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", True, True, RED, debug)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, True, True, RED, "Paca", debug)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, False, True, RED, "Paca", debug)
 # img.mostrar_imagen(imagen_generada)
 
 #############################################################################
 # Ejercicio 11d
 # punto1 = (1500, 250)
 # punto2 = (2000, 800)
-# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, "Paca", RED, debug)
+# imagen_generada = img2.dibujar_cuadrado_texto(imagen, punto1, punto2, False, False, RED, "Paquita es feliz", debug)
 # img.mostrar_imagen(imagen_generada)
 
 #############################################################################
-# Ejercicio 14b
-img2.captura_marca_cara_ojos(BLUE, GREEN, RED)
+# Ejercicio 14b (Realizado)
+# img2.captura_marca_cara_ojos(BLUE, GREEN, RED)

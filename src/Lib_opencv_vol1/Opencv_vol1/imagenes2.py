@@ -12,12 +12,13 @@ import cv2
 ## 5b) Como variante del ejercicio 5 se propone invertir los colores de toda la imagen menos del marco indicado. Añadirlo como funcionalidad extra, es decir, por defecto la función operará como hasta ahora pero podrá pedírsele que realice la operación aquí descrita.
 def invertir_color_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], invertir_resto_imagen: bool, debug: bool = False) -> str:
     """
-    Invierte los colores de un rectángulo en una imagen y guarda la nueva imagen en el directorio imagenes/creadas.
+    Invierte los colores de un rectángulo en una imagen o de la toda la imagen menos del cuadrado y guarda la nueva imagen en el directorio imagenes/creadas.
 
     Args:
         nombre_imagen (str): La ruta de la imagen original.
         punto1 (Tuple[int, int]): La esquina superior izquierda del rectángulo.
         punto2 (Tuple[int, int]): La esquina inferior derecha del rectángulo.
+        invertir_resto_imagen (bool): Variable para decidir si tiene que invertir el rectángulo o el resto de la imagen menos el rectángulo.
         debug (bool, optional): Si es True, imprime información de depuración. Por defecto es False.
 
     Returns:
@@ -57,7 +58,7 @@ def invertir_color_cuadrado(nombre_imagen: str, punto1: Tuple[int, int], punto2:
 ## 11d) Como variante del ejercicio 11 se propone que el texto sea opcional y se ajuste al tamaño del cuadrado
 
 # Los tres ejericicios anteriores se van a unificar en uno solo, ya que comparten la misma funcionalidad.
-def dibujar_cuadrado_texto(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], texto: str, gris: bool, recortar: bool, color: Tuple[int, int, int] = (0, 0, 255), debug: bool = False,) -> str:
+def dibujar_cuadrado_texto(nombre_imagen: str, punto1: Tuple[int, int], punto2: Tuple[int, int], gris: bool, recortar: bool, color: Tuple[int, int, int] = (0, 0, 255), texto: str = "", debug: bool = False,) -> str:
     """
     Dibuja un rectángulo en una imagen, un texto y guarda la nueva imagen en el directorio imagenes/creadas.
 
@@ -75,8 +76,17 @@ def dibujar_cuadrado_texto(nombre_imagen: str, punto1: Tuple[int, int], punto2: 
 
     (x1, y1), (x2, y2) = ordenar_puntos(punto1, punto2)
 
+    imagen = cv2.rectangle(imagen, (x1, y1), (x2, y2), color, 4)
+
+    fuente = cv2.FONT_HERSHEY_SIMPLEX
+
+    texto_pos = (punto1[0] + 20, punto2[1] - 10)
+
+    cv2.putText(imagen, texto, texto_pos, fuente, 4, color, 2, cv2.LINE_AA)
+
     if gris:
         imagen_original = imagen.copy()
+
 
         imagen_gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
         imagen_gris = cv2.cvtColor(imagen_gris, cv2.COLOR_GRAY2BGR)
@@ -86,29 +96,21 @@ def dibujar_cuadrado_texto(nombre_imagen: str, punto1: Tuple[int, int], punto2: 
         imagen = imagen_gris
 
         if recortar:
-            imagen = imagen[y1 - 50:y2 + 50, x1 - 50:x2 + 50]
+            imagen = imagen[y1 - 100:y2 + 100, x1 - 100:x2 + 100]
             nombre_nueva_imagen = formatear_ruta(["imagenes", "creadas"], formatear_nombre_imagen(nombre_imagen, "_img_gris_menos_cuadrado_perimetro"))
         else:
             nombre_nueva_imagen = formatear_ruta(["imagenes", "creadas"], formatear_nombre_imagen(nombre_imagen, "_img_gris_menos_cuadrado"))
     else:
         if recortar:
-            imagen = imagen[y1 - 30:y2 + 30, x1 - 30:x2 + 30]
+            imagen = imagen[y1 - 100:y2 + 100, x1 - 100:x2 + 100]
             nombre_nueva_imagen = formatear_ruta(["imagenes", "creadas"], formatear_nombre_imagen(nombre_imagen, "_img_cuadrado_texto_perimetro"))
         else:
-            nombre_nueva_imagen = formatear_ruta(["imagenes", "creadas"], formatear_nombre_imagen(nombre_imagen, "_img_gris_menos_cuadrado"))
-
-    cuadrado = cv2.rectangle(imagen, (x1, y1), (x2, y2), color, 4)
-
-    font = cv2.FONT_HERSHEY_SIMPLEX
-
-    texto_pos = (punto1[0] + 20, punto2[1] - 10)
-
-    cv2.putText(imagen, texto, texto_pos, font, 4, color, 2, cv2.LINE_AA)
+            nombre_nueva_imagen = formatear_ruta(["imagenes", "creadas"], formatear_nombre_imagen(nombre_imagen, "_img_cuadrado_texto_perimetro"))
 
     mostrar_debug(f"A partir de la imagen: {imagen}", debug)
     mostrar_debug(f"Se generará la imagen con un cuadrado según unas coordenadas y un texto: {nombre_nueva_imagen}", debug)
 
-    guardar_imagen(nombre_nueva_imagen, cuadrado)
+    guardar_imagen(nombre_nueva_imagen, imagen)
 
     return nombre_nueva_imagen
 
@@ -122,6 +124,7 @@ def captura_marca_cara_ojos(color_cara: Tuple[int, int, int], color_ojos: Tuple[
     Args:
         color_cara (Tuple[int, int, int]): El color del rectángulo de la cara en formato BGR.
         color_ojos (Tuple[int, int, int]): El color del rectángulo de los ojos en formato BGR.
+        color_risa (Tuple[int, int, int]): El color del rectángulo de la risa en formato BGR.
     """
     modelo_cara = cv2.CascadeClassifier("clasificadores/haarcascade_frontalface_default.xml")
     modelo_ojos = cv2.CascadeClassifier("clasificadores/haarcascade_eye.xml")
@@ -137,7 +140,7 @@ def captura_marca_cara_ojos(color_cara: Tuple[int, int, int], color_ojos: Tuple[
                 region_gris = gris[y:y + h, x:x + w]
                 region_color = frame[y:y + h, x:x + w]
                 ojos = modelo_ojos.detectMultiScale(region_gris)
-                risas = modelo_risa.detectMultiScale(region_gris)
+                risas = modelo_risa.detectMultiScale(region_gris) # No termina de funcionar mur bien
                 for (ex, ey, ew, eh) in ojos:
                     cv2.rectangle(region_color, (ex, ey), (ex + ew, ey + eh), color_ojos, 2)
                 for (sx, sy, sw, sh) in risas:
